@@ -1,4 +1,6 @@
 Value DEST_HOST (\S+)
+Value SYSTEM_CAPABILITIES (\w+.*)
+Value ENABLED_CAPABILITIES (\w+.*)
 Value SYSTEM_ID (.+?)
 Value MGMT_ADDRESS (.+?)
 Value PLATFORM_VERSION (.+?)
@@ -12,10 +14,13 @@ Start
   ^.*age\s+${AGE}$$ -> Interface
 
 Interface
+  ^\s+Chassis ID type:.*$$
   ^\s+Chassis ID\s+:\s+${SYSTEM_ID}$$
   ^\s+-\s+Port ID type -> Port_ID
   ^\s+-\s+\S+\s+Name:\s+\"${DEST_HOST}\"
   ^.*System Description:\s+\"${PLATFORM_VERSION}(\"|$$)
+  ^.*System Capabilities\s+:\s+${SYSTEM_CAPABILITIES}
+  ^.*Enabled Capabilities:\s+${ENABLED_CAPABILITIES}
   ^\s+\S+\s+Address\s+:\s+${MGMT_ADDRESS}$$
   ^\s*$$ -> Record Start
 
